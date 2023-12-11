@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+
+\title{CMOR 420/520, Homework \#1: LaTeX\ Submission}
+\author{\texttt{[mr72]}}
+\date{September 7, 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Communicating with remote machines via ssh}
+\begin{verbatim}
+[ssh mr72@ssh.clear.rice.edu]
+[The Rice University Network
+ ===========================
+ Unauthorized use is prohibited.
+ 
+ This computer system is for authorized users only.  Individuals using this
+ system without authority or in excess of their authority are subject to
+ having all their activities on this system monitored and recorded or
+ examined by any authorized person, including law enforcement, as system
+ personnel deem appropriate.  In the course of monitoring individuals
+ improperly using the system or in the course of system maintenance, the
+ activities of authorized users may also be monitored and recorded.  Any
+ material so recorded may be disclosed as appropriate.  Anyone using this
+ system consents to these terms.
+ 
+ Problems and/or questions should be submitted via the problem tracking
+ system form: http://helpdesk.rice.edu
+ 
+CURRENT USAGE AND LOAD ON THE COMPUTE NODES:
+  Mon Sep  4 01:15:01 CST 2023
+
+ System                   	# Users   	Load ( 5, 10, 15 minute)      
+   borax.clear.rice.edu   	    2     	  0.09, 0.12, 0.10            
+   cobalt.clear.rice.edu  	    3     	  1.77, 1.65, 1.65            
+   opal.clear.rice.edu    	    0     	  1.59, 1.72, 1.71            
+   zorite.clear.rice.edu  	    5     	  2.09, 1.88, 1.79            
+
+NOTE: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
+   Please log an RT ticket for any issues you may have.
+ 
+   Please log a ticket at https://help.rice.edu if you have any of the following:
+     Documentation is lacking; Trouble getting in; A tool is missing.
+ 
+   NOTE: If you see "id: cannot find name for group ID <Number>" at 
+         login, you can safely ignore this and move on with your work.
+ 
+ NOTE: NOTE: NOTE: On August 3, 2023:
+   Compute Node UPGRADE: RHEL 7 -> RHEL 8
+   Faculty: Please test your class assignments on the new nodes.
+ NOTE: NOTE: NOTE:
+ 
+   NOTE: System host keys have been upgraded to ed25519 signing. A warning
+         about this will appear on login.  Remove old host key and accept
+         new host key.
+ 
+   NOTE: Python language is now python3 by default.
+ 
+   CLEAR NEWS -- https://kb.rice.edu/internal/page.php?id=71856
+   Tips and Hints -- https://kb.rice.edu/internal/page.php?id=71857
+   USING UPDATED clear compute node, rhel 8
+ 
+
+Last login: Mon Sep  4 01:12:20 2023 from 168.5.191.24
+[cobalt.clear.rice.edu]
+\end{verbatim}
+
+\section{A script to build a LaTeX document while hiding auxiliary files}
+\lstset{basicstyle=\ttfamily,language=bash}
+\begin{lstlisting}
+[#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 project_name"
+    exit 1
+fi
+
+project=$1
+
+mkdir -p .build
+
+pdflatex -output-directory .build -jobname $project $project.tex
+
+mv .build/$project.pdf .
+
+echo "$project.pdf has been compiled and is in the current directory."
+]
+\end{lstlisting}
+\caption{Script to compile LaTeX project and manage auxiliary files}
+
+[Check for the project name argument
+
+Create .build directory if it doesn't exist, and suppress warnings
+
+Compile the .tex file, placing the auxiliary files in .build
+
+Move the pdf back to the original directory
+
+Notify me of completion ]
+
+[Possible Critiques: Does not account for possibly non-existent files, existing files with the same name, or files with weird/extra spacing]
+
+\end{document}
